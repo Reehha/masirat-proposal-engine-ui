@@ -1,0 +1,259 @@
+<main class="login-bg">
+    <section class="glass-card">
+      <h1 class="title">Create Account</h1>
+  
+      <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+  
+        <!-- First Name -->
+        <label class="top-label" for="firstName">First Name</label>
+        <div class="input-wrap" [class.invalid]="c('firstName').touched && c('firstName').invalid">
+          <span class="icon">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="white">
+              <path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z"/>
+            </svg>
+          </span>
+          <input id="firstName" type="text" formControlName="firstName" placeholder="e.g., John" />
+        </div>
+        <div class="form-error" *ngIf="c('firstName').touched && c('firstName').invalid">
+          <div class="error-row" *ngIf="c('firstName').errors?.['required']">
+            <span class="warn-icon">⚠️</span><span class="error">First name is required.</span>
+          </div>
+          <div class="error-row" *ngIf="c('firstName').errors?.['minlength']">
+            <span class="warn-icon">⚠️</span><span class="error">Minimum 2 characters.</span>
+          </div>
+        </div>
+  
+        <!-- Last Name -->
+        <label class="top-label" for="lastName">Last Name</label>
+        <div class="input-wrap" [class.invalid]="c('lastName').touched && c('lastName').invalid">
+          <span class="icon">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="white">
+              <path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z"/>
+            </svg>
+          </span>
+          <input id="lastName" type="text" formControlName="lastName" placeholder="e.g., Doe" />
+        </div>
+        <div class="form-error" *ngIf="c('lastName').touched && c('lastName').invalid">
+          <div class="error-row" *ngIf="c('lastName').errors?.['required']">
+            <span class="warn-icon">⚠️</span><span class="error">Last name is required.</span>
+          </div>
+          <div class="error-row" *ngIf="c('lastName').errors?.['minlength']">
+            <span class="warn-icon">⚠️</span><span class="error">Minimum 2 characters.</span>
+          </div>
+        </div>
+  
+        <!-- Email -->
+        <label class="top-label" for="email">Email Address</label>
+        <div class="input-wrap" [class.invalid]="c('email').touched && c('email').invalid">
+          <span class="icon">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="white">
+              <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/>
+            </svg>
+          </span>
+          <input id="email" type="email" formControlName="email" placeholder="e.g., john.doe@example.com" />
+        </div>
+        <div class="form-error" *ngIf="c('email').touched && c('email').invalid">
+          <div class="error-row" *ngIf="c('email').errors?.['required']">
+            <span class="warn-icon">⚠️</span><span class="error">Email is required.</span>
+          </div>
+          <div class="error-row" *ngIf="c('email').errors?.['email']">
+            <span class="warn-icon">⚠️</span><span class="error">Enter a valid email.</span>
+          </div>
+        </div>
+  
+        <!-- DOB -->
+        <label class="top-label" for="dob">Date of Birth</label>
+        <div class="input-wrap" [class.invalid]="c('dob').touched && c('dob').invalid">
+          <span class="icon">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="white">
+              <path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10z"/>
+            </svg>
+          </span>
+          <input id="dob" type="date" formControlName="dob" />
+        </div>
+        <div class="form-error" *ngIf="c('dob').touched && c('dob').invalid">
+          <div class="error-row" *ngIf="c('dob').errors?.['required']">
+            <span class="warn-icon">⚠️</span><span class="error">Date of birth is required.</span>
+          </div>
+          <div class="error-row" *ngIf="c('dob').errors?.['minAge']">
+            <span class="warn-icon">⚠️</span><span class="error">Must be at least 18 years old.</span>
+          </div>
+        </div>
+  
+        <!-- Gender -->
+        <label class="top-label" for="gender">Gender</label>
+        <div class="input-wrap" [class.invalid]="c('gender').touched && c('gender').invalid">
+          <span class="icon">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="white">
+              <path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z"/>
+            </svg>
+          </span>
+          <select id="gender" formControlName="gender">
+            <option value="" disabled>Select gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div class="form-error" *ngIf="c('gender').touched && c('gender').invalid">
+          <div class="error-row">
+            <span class="warn-icon">⚠️</span><span class="error">Gender is required.</span>
+          </div>
+        </div>
+  
+        <!-- Phone -->
+        <label class="top-label" for="phone">Phone Number</label>
+        <div class="input-wrap" [class.invalid]="c('phone').touched && c('phone').invalid">
+          <span class="icon">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="white">
+              <path d="M6.6 10.8c1.4 2.7 3.9 5.2 6.6 6.6l2.2-2.2c.3-.3.8-.4 1.1-.2 1.2.5 2.5.8 3.9.8.6 0 1 .4 1 1V21c0 .6-.4 1-1 1C10.1 22 2 13.9 2 4c0-.6.4-1 1-1h3.2c.6 0 1 .4 1 1 0 1.4.3 2.7.8 3.9.1.4.1.8-.2 1.1l-2.2 2.2z"/>
+            </svg>
+          </span>
+          <input id="phone" type="text" formControlName="phone" placeholder="e.g., +968 91234567" (input)="onPhoneInput()" />
+        </div>
+        <div class="form-error" *ngIf="c('phone').touched && c('phone').invalid">
+          <div class="error-row" *ngIf="c('phone').errors?.['required']">
+            <span class="warn-icon">⚠️</span><span class="error">Phone number is required.</span>
+          </div>
+          <div class="error-row" *ngIf="c('phone').errors?.['pattern']">
+            <span class="warn-icon">⚠️</span><span class="error">Format: +968 9xxxxxxx or +968 7xxxxxxx</span>
+          </div>
+        </div>
+  
+        <!-- Nationality -->
+        <label class="top-label" for="nationality">Nationality</label>
+        <div class="input-wrap" [class.invalid]="c('nationality').touched && c('nationality').invalid">
+          <span class="icon">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="white">
+              <path d="M12 2a10 10 0 100 20 10 10 0 000-20z"/>
+            </svg>
+          </span>
+          <select id="nationality" formControlName="nationality">
+            <option value="" disabled>Select nationality</option>
+            <option *ngFor="let ctry of countries" [value]="ctry">{{ ctry }}</option>
+          </select>
+        </div>
+        <div class="form-error" *ngIf="c('nationality').touched && c('nationality').invalid">
+          <div class="error-row">
+            <span class="warn-icon">⚠️</span><span class="error">Nationality is required.</span>
+          </div>
+        </div>
+  
+        <!-- Address -->
+        <label class="top-label" for="address">Address</label>
+        <div class="input-wrap" [class.invalid]="c('address').touched && c('address').invalid">
+          <span class="icon">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="white">
+              <path d="M12 3l9 8h-3v10h-5v-6H11v6H6V11H3z"/>
+            </svg>
+          </span>
+          <textarea id="address" formControlName="address" placeholder="e.g., Flat 12, Building 5, Muscat" rows="3" style="resize:none;"></textarea>
+        </div>
+        <div class="form-error" *ngIf="c('address').touched && c('address').invalid">
+          <div class="error-row" *ngIf="c('address').errors?.['required']">
+            <span class="warn-icon">⚠️</span><span class="error">Address is required.</span>
+          </div>
+          <div class="error-row" *ngIf="c('address').errors?.['minlength']">
+            <span class="warn-icon">⚠️</span><span class="error">Minimum 10 characters.</span>
+          </div>
+        </div>
+  
+<!-- Password -->
+<label class="top-label" for="password">Password</label>
+<div class="input-wrap" [class.invalid]="c('password').touched && c('password').invalid">
+  <span class="icon">
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="white">
+      <path d="M12 2a5 5 0 00-5 5v3H5v12h14V10h-2V7a5 5 0 00-5-5z"/>
+    </svg>
+  </span>
+
+  <input
+    id="password"
+    [type]="showPassword ? 'text' : 'password'"
+    formControlName="password"
+    placeholder="e.g., 9.hM8q4G7RD-"
+    aria-label="Password"
+  />
+
+  <button type="button" class="eye-btn" (click)="togglePassword()">
+    <!-- eye / eye-off -->
+    <svg *ngIf="!showPassword" viewBox="0 0 24 24">
+      <path d="M12 5c-7 0-10 7-10 7s3 7 10 7 10-7 10-7-3-7-10-7zm0 11a4 4 0 110-8 4 4 0 010 8z"/>
+    </svg>
+    <svg *ngIf="showPassword" viewBox="0 0 24 24">
+      <path d="M2 3l19 19-1.5 1.5-3.2-3.2C14.9 21 13.5 21 12 21 5 21 2 12 2 12c.8-1.7 2-3.6 3.7-5.1L.5 4.5 2 3zm10 6a3 3 0 013 3c0 .5-.1.9-.3 1.3l-4-4c.4-.2.8-.3 1.3-.3zm8 3c-.8 1.7-2 3.6-3.7 5.1l-2.1-2.1c.5-.7.8-1.6.8-2.5a5 5 0 00-5-5c-.9 0-1.8.3-2.5.8L5.9 6.7C7.7 5.3 9.7 5 12 5c7 0 10 7 10 7z"/>
+    </svg>
+  </button>
+</div>
+<div class="form-error password-errors" *ngIf="c('password').touched && c('password').invalid">
+    <div class="error-row" *ngIf="c('password').errors?.['required']">
+      <span class="warn-icon">⚠️</span>
+      <span class="error">Password is required.</span>
+    </div>
+  
+    <div class="error-row" *ngIf="c('password').errors?.['minlength']">
+      <span class="warn-icon">⚠️</span>
+      <span class="error">At least 8 characters.</span>
+    </div>
+  
+    <div class="error-row" *ngIf="c('password').errors?.['pattern']">
+      <span class="warn-icon">⚠️</span>
+      <span class="error">Must include upper, lower, number, and special character.</span>
+    </div>
+  </div>
+  
+
+  
+        <!-- Confirm Password -->
+        <div class="input-wrap" [class.invalid]="c('confirmPassword').touched && (c('confirmPassword').invalid || passwordMismatch)">
+            <span class="icon">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="white">
+                <path d="M12 2a5 5 0 00-5 5v3H5v12h14V10h-2V7a5 5 0 00-5-5z"/>
+              </svg>
+            </span>
+          
+            <input
+              id="confirmPassword"
+              aria-label="Confirm password"
+              [type]="showConfirmPassword ? 'text' : 'password'"
+              formControlName="confirmPassword"
+              placeholder="Re-enter your password"
+            />
+          
+            <span class="eye-icon" (click)="toggleConfirmPassword()" title="Show/Hide password">
+              <svg *ngIf="!showConfirmPassword" viewBox="0 0 24 24" width="18" height="18" fill="white">
+                <path d="M12 5c-7 0-10 7-10 7s3 7 10 7 10-7 10-7-3-7-10-7zm0 11a4 4 0 110-8 4 4 0 010 8z"/>
+              </svg>
+              <svg *ngIf="showConfirmPassword" viewBox="0 0 24 24" width="18" height="18" fill="white">
+                <path d="M2 5l17 17-1.5 1.5L15 20c-1 .3-2 .5-3 .5-7 0-10-7-10-7 1-2.2 2.6-4.2 4.6-5.6L.5 6.5 2 5z"/>
+              </svg>
+            </span>
+          </div>
+          <div class="form-error" *ngIf="c('confirmPassword').touched && (c('confirmPassword').invalid || passwordMismatch)">
+            <div class="error-row" *ngIf="c('confirmPassword').errors?.['required']">
+              <span class="warn-icon">⚠️</span>
+              <span class="error">Please confirm your password.</span>
+            </div>
+          
+            <div class="error-row" *ngIf="passwordMismatch">
+              <span class="warn-icon">⚠️</span>
+              <span class="error">Passwords do not match.</span>
+            </div>
+          </div>
+          
+  
+        <!-- Button -->
+        <app-button type="submit" variant="primary" aria-label="Register account" [disabled]="form.invalid || loading">
+          Register
+        </app-button>
+  
+        <div class="form-error" *ngIf="error">
+          <div class="error-row">
+            <span class="warn-icon">⚠️</span><span class="error">{{ error }}</span>
+          </div>
+        </div>
+  
+      </form>
+    </section>
+  </main>
+  

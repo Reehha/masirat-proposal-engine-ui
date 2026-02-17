@@ -1,0 +1,123 @@
+<main class="login-bg">
+    <section class="glass-card" aria-labelledby="login-title">
+      <h1 id="login-title" class="title">Masirat Proposal Engine</h1>
+  
+      <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+  
+        <!-- Email -->
+        <div
+          class="input-wrap"
+          [class.invalid]="form.controls.email.touched && form.controls.email.invalid"
+        >
+          <span class="icon">
+            <!-- mail icon (same style as sign up) -->
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="white">
+              <path
+                d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"
+              />
+            </svg>
+          </span>
+  
+          <input
+            id="email"
+            type="email"
+            formControlName="email"
+            placeholder="Enter your email Id"
+            autocomplete="email"
+            required
+            aria-describedby="email-error"
+          />
+        </div>
+  
+        <div
+          id="email-error"
+          class="form-error"
+          *ngIf="form.controls.email.touched && form.controls.email.invalid"
+        >
+          <div class="error-row" *ngIf="form.controls.email.errors?.['required']">
+            <span class="warn-icon">⚠️</span>
+            <span class="error">Email is required.</span>
+          </div>
+          <div class="error-row" *ngIf="form.controls.email.errors?.['email']">
+            <span class="warn-icon">⚠️</span>
+            <span class="error">Please enter a valid email address.</span>
+          </div>
+        </div>
+  
+        <!-- Password -->
+        <div
+          class="input-wrap"
+          [class.invalid]="form.controls.password.touched && form.controls.password.invalid"
+        >
+          <span class="icon">
+            <!-- lock icon (same style as sign up) -->
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="white">
+              <path d="M12 2a5 5 0 00-5 5v3H5v12h14V10h-2V7a5 5 0 00-5-5z"/>
+            </svg>
+          </span>
+  
+          <input
+            id="password"
+            [type]="showLoginPassword ? 'text' : 'password'"
+            formControlName="password"
+            placeholder="Enter your password"
+            autocomplete="current-password"
+            required
+            aria-describedby="password-error"
+          />
+  
+          <!-- 👁️ eye toggle (same behavior as sign up) -->
+          <span class="eye-icon" (click)="toggleLoginPassword()" title="Show/Hide password">
+            <svg *ngIf="!showLoginPassword" viewBox="0 0 24 24" width="18" height="18" fill="white">
+              <path d="M12 5c-7 0-10 7-10 7s3 7 10 7 10-7 10-7-3-7-10-7zm0 11a4 4 0 110-8 4 4 0 010 8z"/>
+            </svg>
+            <svg *ngIf="showLoginPassword" viewBox="0 0 24 24" width="18" height="18" fill="white">
+              <path
+                d="M2 3l19 19-1.5 1.5-3.2-3.2C14.9 21 13.5 21 12 21 5 21 2 12 2 12c.8-1.7 2-3.6 3.7-5.1L.5 4.5 2 3z"
+              />
+            </svg>
+          </span>
+        </div>
+  
+        <!-- Password Errors -->
+        <div
+          id="password-error"
+          class="form-error"
+          *ngIf="form.controls.password.touched && form.controls.password.invalid"
+        >
+          <div class="error-row" *ngIf="form.controls.password.errors?.['required']">
+            <span class="warn-icon">⚠️</span>
+            <span class="error">Password is required.</span>
+          </div>
+          <div class="error-row" *ngIf="form.controls.password.errors?.['minlength']">
+            <span class="warn-icon">⚠️</span>
+            <span class="error">Password must be at least 6 characters.</span>
+          </div>
+        </div>
+  
+        <!-- Button -->
+        <app-button
+          type="submit"
+          variant="primary"
+          [disabled]="form.invalid || loading"
+        >
+          Sign in
+        </app-button>
+  
+        <!-- API Error -->
+        <div class="form-error" *ngIf="error">
+          <div class="error-row">
+            <span class="warn-icon">⚠️</span>
+            <span class="error">{{ error }}</span>
+          </div>
+        </div>
+  
+      </form>
+  
+      <footer class="footer">
+        <span>Don’t have an account?</span>
+        <a routerLink="/register" class="link strong">Create one</a>
+      </footer>
+    </section>
+  </main>
+  

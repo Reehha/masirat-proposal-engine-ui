@@ -1,0 +1,245 @@
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  height: var(--header-height);
+  padding: 0 var(--space-lg);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  background: var(--header-bg);
+  backdrop-filter: blur(0.625rem); /* 10px */
+  color: var(--text-white);
+
+  border-bottom: 0.0625rem solid var(--header-border); /* 1px */
+}
+
+.left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xl);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem; /* 10px */
+  font-weight: 700;
+  letter-spacing: 0.0125rem; /* 0.2px */
+}
+
+.logo {
+  width: 2rem;   /* 32px */
+  height: 2rem;
+  border-radius: var(--radius-sm);
+  background: linear-gradient(135deg, var(--accent-indigo), var(--accent-green));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+}
+
+.app-title {
+  font-size: 1.125rem; /* 18px */
+}
+
+.nav-links {
+  display: flex;
+  gap: var(--space-lg);
+}
+
+.nav-links a {
+  color: var(--link-muted);
+  text-decoration: none;
+  font-weight: 500;
+  position: relative;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  color: var(--text-white);
+}
+
+.nav-links a.active::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -0.5rem; /* 8px */
+  width: 100%;
+  height: 0.125rem; /* 2px */
+  background: var(--accent-green);
+  border-radius: 0.125rem;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: 1rem; /* 16px */
+}
+
+.user-menu {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.375rem; /* 6px */
+  cursor: pointer;
+}
+
+.avatar {
+  width: 2.125rem; /* 34px */
+  height: 2.125rem;
+  border-radius: 50%;
+  background: var(--accent-green);
+  color: #052e16;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+}
+
+.avatar.big {
+  min-width: 2.5rem; /* 40px */
+  height: 2.75rem;   /* 44px */
+}
+
+.caret {
+  font-size: 0.75rem; /* 12px */
+  opacity: 0.8;
+}
+
+.dropdown {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 0.625rem); /* 10px */
+  width: 13.75rem; /* 220px */
+  background: var(--dropdown-bg);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: 0 1.25rem 2.5rem var(--shadow-strong); /* 20px 40px */
+  border: 0.0625rem solid var(--header-border);
+}
+
+.dropdown-header {
+  display: flex;
+  gap: 0.75rem; /* 12px */
+  padding: 0.875rem; /* 14px */
+  border-bottom: 0.0625rem solid var(--header-border);
+}
+
+.user-info .name {
+  font-weight: 600;
+}
+
+.user-info .email {
+  font-size: 0.75rem; /* 12px */
+  color: var(--text-muted);
+}
+
+.dropdown-body button,
+.dropdown-footer button {
+  width: 100%;
+  background: none;
+  border: none;
+  color: #e5e7eb;
+  padding: 0.75rem 0.875rem; /* 12px 14px */
+  text-align: left;
+  cursor: pointer;
+}
+
+.dropdown-body button:hover {
+  background: var(--dropdown-hover);
+}
+
+.dropdown-footer {
+  border-top: 0.0625rem solid var(--header-border);
+}
+
+.dropdown-footer .logout {
+  color: var(--danger);
+  font-weight: 600;
+}
+
+.dropdown-footer .logout:hover {
+  background: var(--danger-bg);
+}
+
+/* =========================
+   Responsive Mobile Bottom Bar
+   ========================= */
+
+.desktop-only {
+  display: flex;
+}
+
+.mobile-bar {
+  display: none;
+}
+
+@media (max-width: 48rem) { /* 768px */
+  .app-header {
+    position: fixed;
+    top: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: var(--header-height);
+    padding: 0;
+    z-index: 1000;
+
+    border-top: 0.0625rem solid var(--header-border);
+    border-bottom: none;
+  }
+
+  .left {
+    display: none;
+  }
+
+  .right.desktop-only {
+    display: none;
+  }
+
+  .mobile-bar {
+    display: flex;
+    width: 100%;
+    height: 100%;
+  }
+
+  .mobile-bar button {
+    flex: 1;
+    background: none;
+    border: none;
+    color: #e5e7eb;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-xs);
+    font-size: 0.75rem; /* 12px */
+    cursor: pointer;
+  }
+
+  .mobile-bar button.logout {
+    color: var(--danger);
+  }
+
+  .mobile-bar button:hover {
+    background: var(--mobile-hover);
+  }
+}
+
+@media (max-width: 26.25rem) { /* 420px */
+  .mobile-bar button .label {
+    font-size: 0.6875rem; /* 11px */
+  }
+}
+
+.mobile-bar button .icon {
+  width: 1.375rem; /* 22px */
+  height: 1.375rem;
+  filter: invert(1);
+}
+
+.mobile-bar button.logout .icon {
+  filter: invert(62%) sepia(29%) saturate(749%) hue-rotate(315deg) brightness(101%) contrast(96%);
+}

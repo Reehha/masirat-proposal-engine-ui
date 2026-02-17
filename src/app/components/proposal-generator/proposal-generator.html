@@ -1,0 +1,28 @@
+<main>
+<!-- <app-header></app-header> -->
+<div class="layout" [class.form-collapsed]="formCollapsed">
+    <!-- Left: Form Sidebar -->
+    <div class="left">
+      <div class="form-header">
+        <span>Project Proposal Generator</span>
+        <button type="button" class="collapse-btn" (click)="toggleForm()">
+          {{ formCollapsed ? '▶' : '◀' }}
+        </button>
+      </div>
+  
+      <div class="form-body">
+        <app-proposal-form
+          (valueChange)="onFormChange($event)"
+          (exportPdfRequested)="exportPreviewPdf()"
+        ></app-proposal-form>
+      </div>
+    </div>
+  
+    <!-- Right: Preview -->
+    <div class="right">
+      <div id="proposal-preview">
+        <app-proposal-preview   *ngIf="proposalData"[data]="proposalData"></app-proposal-preview>
+      </div>
+    </div>
+  </div>
+</main>

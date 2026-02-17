@@ -1,0 +1,133 @@
+<div class="preview-shell" *ngIf="data">
+
+  <!-- ===== HEADER ===== -->
+  <section class="preview-header">
+    <div class="header-content">
+      <div class="header-logo">
+        <!-- Optional: Add logo here if needed -->
+      </div>
+      <div class="header-text">
+        <h1>{{ timeline?.projectName || 'Project Proposal' }}</h1>
+        <p class="intro">{{ timeline?.introduction }}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TIMELINE ===== -->
+  <section class="preview-section">
+    <h2 class="section-title">
+      <span class="title-icon">📊</span>
+      <span>6-Month Project Roadmap</span>
+    </h2>
+  
+    <div class="gantt">
+      <!-- Header row -->
+      <div class="gantt-header">
+        <div class="gantt-col label-col">Phase</div>
+        <div
+          class="gantt-col month-col"
+          *ngFor="let m of timeline?.months; let i = index"
+        >
+          {{ m.month | slice:0:3 }} {{ m.year }}
+        </div>
+      </div>
+  
+      <!-- Data rows -->
+      <div
+        class="gantt-row"
+        *ngFor="let m of timeline?.months; let i = index"
+      >
+        <!-- Phase label -->
+        <div class="gantt-col label-col">
+          <span class="phase-number">Phase {{ i + 1 }}</span>
+        </div>
+  
+        <!-- Month cells -->
+        <div
+          class="gantt-col month-col"
+          *ngFor="let c of timeline?.months; let j = index"
+        >
+          <!-- Show card ONLY on diagonal -->
+          <div
+            class="task-bar"
+            *ngIf="i === j && m?.description"
+            title="{{ m.description }}"
+          >
+            {{ m.description }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== REQUIREMENTS ===== -->
+  <section class="preview-section" *ngIf="objectives?.length || clientRequirements?.length">
+
+    <!-- Service Objectives -->
+    <ng-container *ngIf="objectives?.length">
+      <h2 class="section-title">
+        <span class="title-icon">🎯</span>
+        <span>Service Objectives</span>
+      </h2>
+      <div class="card-grid">
+        <div class="info-card" *ngFor="let o of objectives">
+          <div class="card-icon">{{ o.icon || '📋' }}</div>
+          <h3>{{ o.title }}</h3>
+          <p>{{ o.description }}</p>
+          <div class="card-accent"></div>
+        </div>
+      </div>
+    </ng-container>
+  
+    <!-- Client Requirements -->
+    <ng-container *ngIf="clientRequirements?.length">
+      <h2 class="section-title">
+        <span class="title-icon">📋</span>
+        <span>Client Requirements</span>
+      </h2>
+      <div class="card-grid">
+        <div class="info-card requirement-card" *ngFor="let r of clientRequirements">
+          <div class="card-icon">{{ r.icon || '🔑' }}</div>
+          <h3>{{ r.title }}</h3>
+          <p>{{ r.description }}</p>
+          <div class="card-accent"></div>
+        </div>
+      </div>
+    </ng-container>
+  
+  </section>
+  
+  <!-- ===== PRICING ===== -->
+  <section class="preview-section" *ngIf="packages?.length">
+    <h2 class="section-title">
+      <span class="title-icon">💰</span>
+      <span>Pricing Plans</span>
+    </h2>
+  
+    <div class="pricing-grid">
+      <div
+        class="price-card"
+        *ngFor="let p of packages"
+        [class.recommended]="p.recommended"
+      >
+        <div class="price-header">
+          <h3>{{ p.name }}</h3>
+          <div class="price">{{ p.price }} <span class="currency">OMR</span></div>
+          <span *ngIf="p.recommended" class="badge">✨ Recommended</span>
+        </div>
+  
+        <ul class="feature-list">
+          <li *ngFor="let f of p.features">
+            <span class="check-icon">✓</span>
+            <span>{{ f }}</span>
+          </li>
+        </ul>
+        
+        <div class="card-footer" *ngIf="p.footer">
+          {{ p.footer }}
+        </div>
+      </div>
+    </div>
+  </section>
+  
+</div>

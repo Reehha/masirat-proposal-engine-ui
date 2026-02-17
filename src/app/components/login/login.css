@@ -1,0 +1,176 @@
+/* Background */
+.login-bg {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 1.5rem;
+  background:
+    radial-gradient(circle at 20% 20%, var(--accent-1), transparent 40%),
+    radial-gradient(circle at 80% 80%, var(--accent-2), transparent 40%),
+    linear-gradient(135deg, var(--bg-dark-1), var(--bg-dark-2));
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, sans-serif;
+}
+
+/* Glass Card */
+.glass-card {
+  width: 100%;
+  max-width: 26.25rem; /* 420px */
+  padding: 2rem;
+  border-radius: 1.5rem; /* 24px */
+  background: var(--glass-bg);
+  backdrop-filter: blur(1.125rem); /* 18px */
+  -webkit-backdrop-filter: blur(1.125rem);
+  box-shadow: 0 1.875rem 4.375rem var(--shadow-strong); /* 30px 70px */
+  color: var(--text-main);
+}
+
+/* Title */
+.title {
+  margin: 0 0 2rem;
+  text-align: center;
+  font-size: 1.7rem;
+  font-weight: 800;
+  color: var(--text-main);
+}
+
+/* Inputs */
+.input-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  border: 0.125rem solid var(--border-soft); /* 2px */
+  border-radius: 0.625rem; /* 10px */
+  padding: 0.6rem 0.75rem;
+  margin-bottom: 1.2rem;
+  background: var(--input-bg);
+}
+
+.input-wrap .icon {
+  font-size: 1rem;
+}
+
+.input-wrap input,
+.input-wrap textarea,
+.input-wrap select {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text-main);
+  font-size: 1rem;
+}
+
+.input-wrap input::placeholder,
+.input-wrap textarea::placeholder {
+  color: var(--placeholder);
+}
+
+/* Focus state (WCAG) */
+.input-wrap:focus-within {
+  border-color: var(--text-main);
+  box-shadow: 0 0 0 0.1875rem var(--focus-ring); /* 3px */
+}
+
+/* Invalid */
+.input-wrap.invalid {
+  border-color: var(--error);
+}
+
+.input-wrap input.invalid {
+  color: #ffe4e6;
+}
+
+/* Meta row */
+.meta-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.remember {
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+}
+
+.remember input {
+  width: 1.125rem;  /* 18px */
+  height: 1.125rem;
+  accent-color: var(--accent-1);
+}
+
+/* Links */
+.link {
+  color: var(--text-main);
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+.link:focus-visible {
+  outline: 0.1875rem solid var(--text-main); /* 3px */
+  outline-offset: 0.1875rem;
+}
+
+/* Error */
+.form-error {
+  margin: 1rem;
+  font-size: 0.85rem;
+  color: var(--error-soft) !important;
+  line-height: 1.4;
+  display: flex;
+  align-items: center;
+  gap: 0.375rem; /* 6px */
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+.error {
+  color: var(--error-soft) !important;
+}
+
+/* Footer */
+.footer {
+  margin-top: 2rem;
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+span {
+  color: var(--text-main);
+}
+
+/* Eye toggle button */
+.eye-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0 0.25rem; /* 4px */
+  display: flex;
+  align-items: center;
+  opacity: 0.85;
+}
+
+.eye-btn:hover {
+  opacity: 1;
+}
+
+.eye-btn svg {
+  width: 1.125rem; /* 18px */
+  height: 1.125rem;
+  fill: var(--text-main);
+}
+
+.error-row {
+  display: flex;
+  gap: 0.2rem;
+}
+
+/* Small height screens */
+@media (max-height: 43.75rem) { /* 700px */
+  .glass-card {
+    width: unset;
+  }
+}

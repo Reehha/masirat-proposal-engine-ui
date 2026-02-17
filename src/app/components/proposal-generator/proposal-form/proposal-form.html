@@ -1,0 +1,399 @@
+<div class="header-actions">
+  <button
+    type="button"
+    class="open-proposal-btn"
+    (click)="openProposalModal()"
+    aria-label="Open existing proposal"
+  >
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path d="M4 6H20V8H4V6ZM4 11H20V13H4V11ZM4 16H14V18H4V16ZM19 13L15 9V12H11V14H15V17L19 13Z" fill="currentColor"/>
+    </svg>
+    Open Existing Proposal
+  </button>
+</div>
+
+<form class="proposal-form" [formGroup]="form" (ngSubmit)="submit()">
+
+  <!-- ================= TIMELINE ================= -->
+  <section class="form-section" formGroupName="timeline">
+
+    <div class="input-wrap">
+      <input
+        formControlName="projectName"
+        placeholder="Project name *"
+        aria-label="Project name"
+      />
+    </div>
+    <div class="error" *ngIf="form.get('timeline.projectName')?.touched && form.get('timeline.projectName')?.invalid">
+      Project name is required (min 3 chars)
+    </div>
+
+    <div class="input-wrap">
+      <textarea
+        formControlName="introduction"
+        rows="3"
+        placeholder="Introduction"
+        aria-label="Project introduction"
+      ></textarea>
+    </div>
+
+    <h3 class="sub-title">6-Month Timeline</h3>
+
+    <div class="months-grid" formArrayName="months">
+      <div class="month-card" *ngFor="let g of months.controls; let i = index" [formGroupName]="i">
+
+        <div class="row">
+          <div class="input-wrap">
+            <select formControlName="month" aria-label="Select month">
+              <option *ngFor="let m of monthNames" [value]="m">{{ m }}</option>
+            </select>
+          </div>
+
+          <div class="input-wrap">
+            <select formControlName="year" aria-label="Select year">
+              <option *ngFor="let y of years" [value]="y">{{ y }}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="input-wrap">
+          <textarea
+            formControlName="description"
+            rows="3"
+            placeholder="Milestone description"
+            aria-label="Milestone description"
+          ></textarea>
+        </div>
+        <div class="error" *ngIf="g.get('description')?.touched && g.get('description')?.invalid">
+          Milestone description is required
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= REQUIREMENTS ================= -->
+  <section class="form-section">
+    <h2 class="section-title">Service Objectives</h2>
+
+    <div [formGroup]="objectiveEditor">
+      <div class="input-wrap">
+        <input
+          formControlName="title"
+          placeholder="Objective title"
+          aria-label="Objective title"
+        />
+      </div>
+      <div class="input-wrap">
+        <textarea
+          formControlName="description"
+          rows="3"
+          placeholder="Objective description"
+          aria-label="Objective description"
+        ></textarea>
+      </div>
+
+      <div class="row">
+        <button type="button" class="add-btn" (click)="saveObjective()" [disabled]="!isObjectiveValid">
+          {{ editingObjectiveIndex === null ? 'Add Objective' : 'Update Objective' }}
+        </button>
+        <button *ngIf="editingObjectiveIndex !== null" type="button" class="edit-btn" (click)="cancelObjectiveEdit()">
+          Cancel
+        </button>
+      </div>
+    </div>
+
+    <!-- List -->
+    <ul class="simple-list">
+      <li *ngFor="let o of objectives.controls; let i = index">
+        <div class="card-content" (click)="editObjective(i)">
+          <strong>{{ o.value.title }}</strong>
+          <div class="muted">{{ o.value.description }}</div>
+        </div>
+
+        <div class="item-actions">
+          <button
+            type="button"
+            class="edit-btn"
+            (click)="editObjective(i); $event.stopPropagation()"
+            aria-label="Edit objective"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M3 17.25V21H6.75L17.81 9.94L14.06 6.19L3 17.25ZM20.71 7.04C21.1 6.65 21.1 6.02 20.71 5.63L18.37 3.29C17.98 2.9 17.35 2.9 16.96 3.29L15.13 5.12L18.88 8.87L20.71 7.04Z" fill="currentColor"/>
+            </svg>
+          </button>
+          <button
+            type="button"
+            class="icon-btn"
+            (click)="deleteObjective(i); $event.stopPropagation()"
+            aria-label="Delete objective"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M6 19C6 20.1 6.9 21 8 21H16C17.1 21 18 20.1 18 19V7H6V19ZM19 4H15.5L14.5 3H9.5L8.5 4H5V6H19V4Z" fill="currentColor"/>
+            </svg>
+          </button>
+        </div>
+      </li>
+    </ul>
+
+    <h2 class="section-title">Client Requirements</h2>
+
+    <div [formGroup]="clientReqEditor">
+      <div class="input-wrap">
+        <input
+          formControlName="title"
+          placeholder="Requirement title"
+          aria-label="Requirement title"
+        />
+      </div>
+      <div class="input-wrap">
+        <textarea
+          formControlName="description"
+          rows="3"
+          placeholder="Requirement description"
+          aria-label="Requirement description"
+        ></textarea>
+      </div>
+
+      <div class="row">
+        <button type="button" class="add-btn" (click)="saveClientReq()" [disabled]="!isClientReqValid">
+          {{ editingClientReqIndex === null ? 'Add Requirement' : 'Update Requirement' }}
+        </button>
+        <button *ngIf="editingClientReqIndex !== null" type="button" class="edit-btn" (click)="cancelClientReqEdit()">
+          Cancel
+        </button>
+      </div>
+    </div>
+
+    <!-- List -->
+    <ul class="simple-list">
+      <li *ngFor="let r of clientRequirements.controls; let i = index">
+        <div class="card-content" (click)="editClientReq(i)">
+          <strong>{{ r.value.title }}</strong>
+          <div class="muted">{{ r.value.description }}</div>
+        </div>
+        <div class="item-actions">
+          <button
+            type="button"
+            class="edit-btn"
+            (click)="editClientReq(i); $event.stopPropagation()"
+            aria-label="Edit client requirement"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M3 17.25V21H6.75L17.81 9.94L14.06 6.19L3 17.25ZM20.71 7.04C21.1 6.65 21.1 6.02 20.71 5.63L18.37 3.29C17.98 2.9 17.35 2.9 16.96 3.29L15.13 5.12L18.88 8.87L20.71 7.04Z" fill="currentColor"/>
+            </svg>
+          </button>
+          <button
+            type="button"
+            class="icon-btn"
+            (click)="deleteClientReq(i); $event.stopPropagation()"
+            aria-label="Delete client requirement"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M6 19C6 20.1 6.9 21 8 21H16C17.1 21 18 20.1 18 19V7H6V19ZM19 4H15.5L14.5 3H9.5L8.5 4H5V6H19V4Z" fill="currentColor"/>
+            </svg>
+          </button>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ================= PRICING ================= -->
+  <section class="form-section">
+    <h2 class="section-title">Pricing</h2>
+
+    <div [formGroup]="packageEditor">
+      <div class="input-wrap">
+        <input
+          formControlName="name"
+          placeholder="Package name"
+          aria-label="Package name"
+        />
+      </div>
+      <div class="input-wrap">
+        <label for="price">Price (OMR)</label>
+        <input
+          id="price"
+          type="number"
+          formControlName="price"
+          placeholder="Price (OMR)"
+        />
+      </div>
+
+      <label class="checkbox-row">
+        <input type="checkbox" formControlName="recommended" /> Recommended
+      </label>
+
+      <div class="input-wrap">
+        <textarea
+          formControlName="featuresText"
+          rows="3"
+          placeholder="Features (comma separated)"
+          aria-label="Package features"
+        ></textarea>
+      </div>
+
+      <div class="row">
+        <button type="button" class="add-btn" (click)="savePackage()" [disabled]="!isPackageValid">
+          {{ editingPackageIndex === null ? 'Add Package' : 'Update Package' }}
+        </button>
+        <button *ngIf="editingPackageIndex !== null" type="button" class="edit-btn" (click)="cancelPackageEdit()">
+          Cancel
+        </button>
+      </div>
+    </div>
+
+    <!-- List -->
+    <ul class="simple-list">
+      <li *ngFor="let p of packages.controls; let i = index">
+        <div class="card-content" (click)="editPackage(i)">
+          <strong>{{ p.value.name }}</strong> — {{ p.value.price }} OMR
+          <span *ngIf="p.value.recommended" class="badge">Recommended</span>
+        </div>
+        <div class="item-actions">
+          <button
+            type="button"
+            class="edit-btn"
+            (click)="editPackage(i); $event.stopPropagation()"
+            aria-label="Edit package"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M3 17.25V21H6.75L17.81 9.94L14.06 6.19L3 17.25ZM20.71 7.04C21.1 6.65 21.1 6.02 20.71 5.63L18.37 3.29C17.98 2.9 17.35 2.9 16.96 3.29L15.13 5.12L18.88 8.87L20.71 7.04Z" fill="currentColor"/>
+            </svg>
+          </button>
+          <button
+            type="button"
+            class="icon-btn"
+            (click)="deletePackage(i); $event.stopPropagation()"
+            aria-label="Delete package"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M6 19C6 20.1 6.9 21 8 21H16C17.1 21 18 20.1 18 19V7H6V19ZM19 4H15.5L14.5 3H9.5L8.5 4H5V6H19V4Z" fill="currentColor"/>
+            </svg>
+          </button>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <div class="form-actions">
+    <button type="submit" class="submit-btn">
+      Save Proposal
+    </button>
+
+    <button
+      type="button"
+      class="export-btn"
+      (click)="requestExportPdf()"
+      aria-label="Export proposal as PDF"
+    >
+      Export PDF
+    </button>
+  </div>
+
+</form>
+
+<!-- Proposal Selection Modal -->
+<div class="modal-overlay" *ngIf="showProposalModal" (click)="closeProposalModal()">
+  <div class="modal-content" (click)="onModalContentClick($event)">
+    <div class="modal-header">
+      <h3>Select Existing Proposal</h3>
+      <button type="button" class="close-btn" (click)="closeProposalModal()" aria-label="Close dialog">×</button>
+    </div>
+
+    <div class="modal-body">
+      <div class="search-wrap">
+        <input
+          type="text"
+          placeholder="Search proposals..."
+          [(ngModel)]="searchTerm"
+          (ngModelChange)="searchProposals()"
+          class="search-input"
+          aria-label="Search proposals"
+        />
+      </div>
+
+      <div class="loading-state" *ngIf="loading" (click)="$event.stopPropagation()">
+        Loading proposals...
+      </div>
+
+      <div class="proposals-list" *ngIf="!loading" (click)="$event.stopPropagation()">
+        <div *ngFor="let proposal of filteredProposals; trackBy: trackByPid" class="proposal-item">
+          <div class="proposal-info" (click)="loadProposal(proposal)">
+            <strong>{{ proposal.pname }}</strong>
+            <span class="proposal-date">
+              {{ proposal.createdAt | date:'dd MMM yyyy, hh:mm a':'GMT+0400' }}
+            </span>
+          </div>
+          <div class="proposal-actions">
+            <div class="proposal-preview" (click)="loadProposal(proposal)">
+              <span class="badge">{{ proposal.clientReq?.length || 0 }} Requirements</span>
+              <span class="badge">{{ proposal.pricingPlans?.length || 0 }} Packages</span>
+            </div>
+            <button
+              type="button"
+              class="delete-icon-btn"
+              (click)="confirmDelete(proposal, $event)"
+              aria-label="Delete proposal"
+              title="Delete proposal"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M6 19C6 20.1 6.9 21 8 21H16C17.1 21 18 20.1 18 19V7H6V19ZM19 4H15.5L14.5 3H9.5L8.5 4H5V6H19V4Z" fill="currentColor"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="no-results" *ngIf="filteredProposals.length === 0" (click)="$event.stopPropagation()">
+          No proposals found
+        </div>
+      </div>
+
+      <div class="pagination" *ngIf="totalPages > 1" (click)="$event.stopPropagation()">
+        <button type="button" class="page-btn" [disabled]="currentPage === 1" (click)="changePage(currentPage - 1)">
+          Previous
+        </button>
+
+        <span class="page-info">
+          Page {{ currentPage }} of {{ totalPages }}
+        </span>
+
+        <button type="button" class="page-btn" [disabled]="currentPage === totalPages" (click)="changePage(currentPage + 1)">
+          Next
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div class="modal-overlay" *ngIf="showDeleteConfirm" (click)="cancelDelete()">
+  <div class="modal-content delete-confirm" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h3>Confirm Delete</h3>
+      <button type="button" class="close-btn" (click)="cancelDelete()" aria-label="Close dialog">×</button>
+    </div>
+
+    <div class="modal-body">
+      <p>Are you sure you want to delete "<strong>{{ proposalToDelete?.pname }}</strong>"?</p>
+      <p class="warning-text">This action cannot be undone.</p>
+
+      <div class="confirm-actions">
+        <button type="button" class="cancel-btn" (click)="cancelDelete()" [disabled]="deleteInProgress">
+          Cancel
+        </button>
+        <button type="button" class="delete-confirm-btn" (click)="deleteProposal()" [disabled]="deleteInProgress">
+          {{ deleteInProgress ? 'Deleting...' : 'Delete' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

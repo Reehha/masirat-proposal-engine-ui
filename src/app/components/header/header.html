@@ -1,0 +1,55 @@
+<header class="app-header">
+  <div class="left">
+    <div class="brand">
+      <div class="logo">◆</div>
+      <span class="app-title">Masirat</span>
+    </div>
+  </div>
+
+  <div class="right desktop-only">
+    <div class="actions"></div>
+
+    <div class="user-menu" (click)="toggleMenu()">
+      <div class="avatar">{{ avatarLetter }}</div>
+      <span class="caret">▾</span>
+
+      <div class="dropdown" *ngIf="menuOpen">
+        <div class="dropdown-header">
+          <div class="avatar big">{{ avatarLetter }}</div>
+          <div class="user-info">
+            <div class="name">Account</div>
+            <div class="email">{{ userEmail }}</div>
+          </div>
+        </div>
+
+        <div class="dropdown-body">
+          <button type="button" (click)="goToManage()">Manage</button>
+          <button type="button" (click)="goToSettings()">Settings</button>
+        </div>
+
+        <div class="dropdown-footer">
+          <button type="button" class="logout" (click)="logout()">Logout</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Bottom Bar -->
+  <div class="mobile-bar">
+    <button type="button" (click)="goToManage()" aria-label="Manage">
+      <img src="assets/icons/manage.svg" class="icon" alt="Manage" />
+      <span class="label">Manage</span>
+    </button>
+  
+    <button type="button" (click)="goToSettings()" aria-label="Settings">
+      <img src="assets/icons/settings.svg" class="icon" alt="Settings" />
+      <span class="label">Settings</span>
+    </button>
+  
+    <button type="button" class="logout" (click)="logout()" aria-label="Logout">
+      <img src="assets/icons/logout.svg" class="icon" alt="Logout" />
+      <span class="label">Logout</span>
+    </button>
+  </div>
+  
+</header>
